@@ -1,35 +1,14 @@
 import './App.css';
-import logo from './images/logo.svg';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Main from './components/Main';
 
 function App() {
   return (
     <div className='page'>
-      <header className="header page__header">
-        <img src={logo} alt="Логотип" className="header__logo"/>
-      </header>
-      <main>
-        <section className="profile page__profile">
-          <div className="profile__avatar-group">
-            <img src="#" alt="Аватар пользователя" className="profile__avatar"/>
-              <button type="button" className="profile__avatar-btn btn-icon"></button>
-          </div>
-          <div className="profile__info">
-            <div className="profile__name-wrapper">
-              <h1 className="profile__name">Загрузка...</h1>
-              <button type="button" className="profile__edit btn-icon"></button>
-            </div>
-            <p className="profile__description"></p>
-          </div>
-          <button type="button" className="profile__add-photo btn-icon"></button>
-        </section>
-        <section className="cards page__cards">
-          <ul className="cards__list">
-          </ul>
-        </section>
-      </main>
-      <footer className="footer page__footer">
-        <p className="footer__copyright">&copy; 2020 Mesto Russia</p>
-      </footer>
+      <Header/>
+      <Main/>
+      <Footer/>
       <div className="popup popup_type_profile">
         <div className="popup__container">
           <button type="button" className="popup__close-btn btn-icon"></button>
