@@ -1,7 +1,7 @@
 import './App.css';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Main from './components/Main';
+import Header from './Header';
+import Footer from './Footer';
+import Main from './Main';
 
 function App() {
   return (
@@ -52,7 +52,7 @@ function App() {
         <div className="popup__container">
           <button type="button" className="popup__close-btn btn-icon"></button>
           <div className="card-details">
-            <img src="#" alt="#" className="card-details__image"/>
+            <img src="src/components/App#" alt="#" className="card-details__image"/>
               <p className="card-details__description"></p>
           </div>
         </div>
@@ -83,7 +83,7 @@ function App() {
       <template id="card-template">
         <li className="card">
           <div className="card__trash btn-icon"></div>
-          <img src="#" alt="#" className="card__image"/>
+          <img src="src/components/App#" alt="#" className="card__image"/>
             <div className="card__body">
               <h2 className="card__caption"></h2>
               <div className="card__like-group">
