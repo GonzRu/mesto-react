@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ImagePopup = ({card, onClose}) => {
+const ImagePopup = ({card, onClose, onLike}) => {
 
     if (!card) return ('');
 
@@ -18,6 +18,7 @@ const ImagePopup = ({card, onClose}) => {
                 <div className="card-details">
                     <img src={card.link}
                          alt="#"
+                         onClick={onLike}
                          className="card-details__image"
                     />
                     <p className="card-details__description">

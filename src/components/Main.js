@@ -4,28 +4,39 @@ import Card from './Card';
 
 const Main = ({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) => {
 
+    const [userId, setUserId] = useState();
     const [userAvatar, setUserAvatar] = useState(null);
     const [userName, setUserName] = useState(null);
     const [userDescription, setUserDescription] = useState(null);
     const [cards, setCards] = useState([]);
 
+    const onLike = (card, like) => {
+        const promise = like ? api.likeCard(card._id) : api.unlikeCard(card._id);
+
+        promise
+            .then(card => {
+                const newCardsList = cards.map(c => c._id === card._id ? card : c);
+
+                setCards(newCardsList);
+            })
+            .catch(error => console.log(error));
+    }
+
     useEffect(() => {
-        api.getMyUser()
-            .then(user => {
+        Promise.all([api.getMyUser(), api.getInitialCards()])
+            .then(result => {
+                const [user, cards] = result;
+
+                setUserId(user._id)
                 setUserAvatar(user.avatar);
                 setUserName(user.name);
                 setUserDescription(user.about);
-            })
-            .catch(error => console.log(error));
-    }, []);
 
-    useEffect(() => {
-        api.getInitialCards()
-            .then(cards => {
                 setCards(cards);
             })
             .catch(error => console.log(error));
     }, []);
+
 
     return (
         <main>
@@ -61,6 +72,8 @@ const Main = ({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) => {
                     {cards.map(card =>
                         <Card key={card._id}
                               card={card}
+                              userId={userId}
+                              onLike={onLike}
                               onCardClick={onCardClick}/>
                     )}
                 </ul>
