@@ -5,8 +5,12 @@ const ImagePopup = ({card, onClose}) => {
     if (!card) return ('');
 
     return (
-        <div className="popup popup_type_card-details popup_opened">
-            <div className="popup__container">
+        <div className="popup popup_type_card-details popup_opened"
+             onClick={onClose}
+        >
+            <div className="popup__container"
+                 onClick={(event) => event.stopPropagation()}
+            >
                 <button type="button"
                         className="popup__close-btn btn-icon"
                         onClick={onClose}

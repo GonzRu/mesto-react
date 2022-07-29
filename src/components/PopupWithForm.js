@@ -7,8 +7,10 @@ const PopupWithForm = ({name, title, children, isOpen, onClose}) => {
         : 'popup popup_type_${name}';
 
     return (
-        <div className={rootClasses}>
-            <div className="popup__container">
+        <div className={rootClasses} onClick={onClose}>
+            <div className="popup__container"
+                 onClick={(event) => event.stopPropagation()}
+            >
                 <button type="button"
                         className="popup__close-btn btn-icon"
                         onClick={onClose}
