@@ -15,7 +15,10 @@ const PopupWithForm = ({name, title, children, isOpen, onClose}) => {
                         className="popup__close-btn btn-icon"
                         onClick={onClose}
                 ></button>
-                <form className="form" name={name} noValidate>
+                <form className="form"
+                      name={name}
+                      noValidate
+                >
                     <h2 className="form__header">{title}</h2>
                     {children}
                     <button type="submit" className="form__save-btn">Сохранить</button>
