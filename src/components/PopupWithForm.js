@@ -18,6 +18,10 @@ const PopupWithForm = ({name, title, children, isOpen, onClose}) => {
                 <form className="form"
                       name={name}
                       noValidate
+                      onSubmit={e => {
+                          e.preventDefault();
+                          onClose();
+                      }}
                 >
                     <h2 className="form__header">{title}</h2>
                     {children}

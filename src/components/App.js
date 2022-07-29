@@ -51,7 +51,7 @@ function App() {
                     <span className="form__error" id="edit-profile-form-description-error"></span>
                 </label>
             </PopupWithForm>
-            <PopupWithForm name='card'
+            <PopupWithForm name='add-place'
                            title='Новое место'
                            isOpen={isAddPlacePopupOpen}
                            onClose={onCloseAll}
