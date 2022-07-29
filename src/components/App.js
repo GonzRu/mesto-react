@@ -11,6 +11,7 @@ function App() {
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
     const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+    const [selectedCard, setSelectedCard] = useState(null);
 
     const onEditAvatar = () => setIsEditAvatarPopupOpen(true);
     const onEditProfile = () => setIsEditProfilePopupOpen(true);
@@ -19,7 +20,9 @@ function App() {
         setIsEditAvatarPopupOpen(false);
         setIsEditProfilePopupOpen(false);
         setIsAddPlacePopupOpen(false);
+        setSelectedCard(null);
     }
+    const onCardClick = (card) => setSelectedCard(card);
 
     return (
         <div className='page'>
@@ -27,6 +30,7 @@ function App() {
             <Main onEditAvatar={onEditAvatar}
                   onEditProfile={onEditProfile}
                   onAddPlace={onAddPlace}
+                  onCardClick={onCardClick}
             />
             <Footer/>
             <PopupWithForm name='profile'
@@ -81,7 +85,7 @@ function App() {
                     <span className="form__error" id="add-card-form-link-error"></span>
                 </label>
             </PopupWithForm>
-            <ImagePopup/>
+            <ImagePopup card={selectedCard} onClose={onCloseAll}/>
             <div className="popup popup_type_card-remove">
                 <div className="popup__container">
                     <button type="button" className="popup__close-btn btn-icon"></button>
