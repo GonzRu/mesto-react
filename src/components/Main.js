@@ -4,10 +4,10 @@ import Card from './Card';
 
 const Main = ({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) => {
 
-    const [userId, setUserId] = useState();
-    const [userAvatar, setUserAvatar] = useState(null);
-    const [userName, setUserName] = useState(null);
-    const [userDescription, setUserDescription] = useState(null);
+    const [userId, setUserId] = useState('');
+    const [userAvatar, setUserAvatar] = useState('');
+    const [userName, setUserName] = useState('');
+    const [userDescription, setUserDescription] = useState('');
     const [cards, setCards] = useState([]);
 
     const onLike = (card, like) => {
@@ -42,39 +42,45 @@ const Main = ({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) => {
         <main>
             <section className="profile page__profile">
                 <div className="profile__avatar-group">
-                    <img src={userAvatar}
-                         alt="Аватар пользователя"
-                         className="profile__avatar"/>
-                    <button type="button"
-                            className="profile__avatar-btn btn-icon"
-                            onClick={onEditAvatar}
+                    <img
+                        src={userAvatar}
+                        alt="Аватар пользователя"
+                        className="profile__avatar"/>
+                    <button
+                        type="button"
+                        className="profile__avatar-btn btn-icon"
+                        onClick={onEditAvatar}
                     ></button>
                 </div>
                 <div className="profile__info">
                     <div className="profile__name-wrapper">
-                        <h1 className="profile__name">
+                        <h1
+                            className="profile__name">
                             {userName ? userName : 'Загрузка...'}
                         </h1>
-                        <button type="button"
-                                className="profile__edit btn-icon"
-                                onClick={onEditProfile}
+                        <button
+                            type="button"
+                            className="profile__edit btn-icon"
+                            onClick={onEditProfile}
                         ></button>
                     </div>
                     <p className="profile__description">{userDescription}</p>
                 </div>
-                <button type="button"
-                        onClick={onAddPlace}
-                        className="profile__add-photo btn-icon"
+                <button
+                    type="button"
+                    onClick={onAddPlace}
+                    className="profile__add-photo btn-icon"
                 ></button>
             </section>
             <section className="cards page__cards">
                 <ul className="cards__list">
                     {cards.map(card =>
-                        <Card key={card._id}
-                              card={card}
-                              userId={userId}
-                              onLike={onLike}
-                              onCardClick={onCardClick}/>
+                        <Card
+                            key={card._id}
+                            card={card}
+                            userId={userId}
+                            onLike={onLike}
+                            onCardClick={onCardClick}/>
                     )}
                 </ul>
             </section>

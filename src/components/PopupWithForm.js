@@ -1,10 +1,10 @@
 import React from 'react';
 
-const PopupWithForm = ({name, title, children, isOpen, onClose}) => {
+const PopupWithForm = ({name, title, submitText, children, isOpen, onClose}) => {
 
     const rootClasses = isOpen
-        ? 'popup popup_type_${name} popup_opened'
-        : 'popup popup_type_${name}';
+        ? `popup popup_type_${name} popup_opened`
+        : `popup popup_type_${name}`;
 
     return (
         <div className={rootClasses} onClick={onClose}>
@@ -25,7 +25,7 @@ const PopupWithForm = ({name, title, children, isOpen, onClose}) => {
                 >
                     <h2 className="form__header">{title}</h2>
                     {children}
-                    <button type="submit" className="form__save-btn">Сохранить</button>
+                    <button type="submit" className="form__save-btn">{submitText ? submitText : 'Сохранить'}</button>
                 </form>
             </div>
         </div>

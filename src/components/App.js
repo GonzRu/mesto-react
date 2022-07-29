@@ -27,21 +27,29 @@ function App() {
     return (
         <div className='page'>
             <Header/>
-            <Main onEditAvatar={onEditAvatar}
-                  onEditProfile={onEditProfile}
-                  onAddPlace={onAddPlace}
-                  onCardClick={onCardClick}
+            <Main
+                onEditAvatar={onEditAvatar}
+                onEditProfile={onEditProfile}
+                onAddPlace={onAddPlace}
+                onCardClick={onCardClick}
             />
             <Footer/>
-            <PopupWithForm name='profile'
-                           title='Редактировать профиль'
-                           isOpen={isEditProfilePopupOpen}
-                           onClose={onCloseAll}
+            <PopupWithForm
+                name='profile'
+                title='Редактировать профиль'
+                isOpen={isEditProfilePopupOpen}
+                onClose={onCloseAll}
             >
                 <label className="form__field">
-                    <input type="text" className="form__textbox" name="name" id="edit-profile-form-name"
-                           placeholder="Имя"
-                           required minLength="2" maxLength="40"/>
+                    <input
+                        type="text"
+                        className="form__textbox"
+                        name="name"
+                        id="edit-profile-form-name"
+                        placeholder="Имя"
+                        required minLength="2"
+                        maxLength="40"
+                    />
                     <span className="form__error" id="edit-profile-form-name-error"></span>
                 </label>
                 <label className="form__field">
@@ -53,6 +61,7 @@ function App() {
             </PopupWithForm>
             <PopupWithForm name='add-place'
                            title='Новое место'
+                           submitText='Создать'
                            isOpen={isAddPlacePopupOpen}
                            onClose={onCloseAll}
             >
@@ -86,15 +95,16 @@ function App() {
                 </label>
             </PopupWithForm>
             <ImagePopup card={selectedCard} onClose={onCloseAll}/>
-            <div className="popup popup_type_card-remove">
-                <div className="popup__container">
-                    <button type="button" className="popup__close-btn btn-icon"></button>
-                    <form className="form" name="remove-card-form" noValidate>
-                        <h2 className="form__header">Вы уверены?</h2>
-                        <button type="submit" className="form__save-btn">Да</button>
-                    </form>
-                </div>
-            </div>
+            <PopupWithForm
+                name='card-remove'
+                title='Вы уверены?'
+                submitText='Да'
+                onClose={onCloseAll}
+                isOpen={false}
+            >
+                <h2 className="form__header">Вы уверены?</h2>
+                <button type="submit" className="form__save-btn">Да</button>
+            </PopupWithForm>
         </div>
     );
 }
