@@ -1,4 +1,3 @@
-import './App.css';
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
@@ -59,38 +58,65 @@ function App() {
                     <span className="form__error" id="edit-profile-form-description-error"></span>
                 </label>
             </PopupWithForm>
-            <PopupWithForm name='add-place'
-                           title='Новое место'
-                           submitText='Создать'
-                           isOpen={isAddPlacePopupOpen}
-                           onClose={onCloseAll}
+            <PopupWithForm
+                name='add-place'
+                title='Новое место'
+                submitText='Создать'
+                isOpen={isAddPlacePopupOpen}
+                onClose={onCloseAll}
             >
                 <label className="form__field">
-                    <input type="text" className="form__textbox" name="name" id="add-card-form-name"
-                           placeholder="Название"
-                           required minLength="2" maxLength="30"/>
+                    <input
+                        type="text"
+                        className="form__textbox"
+                        name="name"
+                        id="add-card-form-name"
+                        placeholder="Название"
+                        required
+                        minLength="2"
+                        maxLength="30"
+                    />
                     <span className="form__error" id="add-card-form-name-error"></span>
                 </label>
                 <label className="form__field">
-                    <input type="url" className="form__textbox" name="link" id="add-card-form-link"
-                           placeholder="Ссылка на картинку" required/>
+                    <input
+                        type="url"
+                        className="form__textbox"
+                        name="link"
+                        id="add-card-form-link"
+                        placeholder="Ссылка на картинку"
+                        required
+                    />
                     <span className="form__error" id="add-card-form-link-error"></span>
                 </label>
             </PopupWithForm>
-            <PopupWithForm name='edit-avatar'
-                           title='Обновить аватар'
-                           isOpen={isEditAvatarPopupOpen}
-                           onClose={onCloseAll}
+            <PopupWithForm
+                name='edit-avatar'
+                title='Обновить аватар'
+                isOpen={isEditAvatarPopupOpen}
+                onClose={onCloseAll}
             >
                 <label className="form__field">
-                    <input type="text" className="form__textbox" name="name" id="add-card-form-name"
-                           placeholder="Название"
-                           required minLength="2" maxLength="30"/>
+                    <input
+                        type="text"
+                        className="form__textbox"
+                        name="name"
+                        id="add-card-form-name"
+                        placeholder="Название"
+                        required minLength="2"
+                        maxLength="30"
+                    />
                     <span className="form__error" id="add-card-form-name-error"></span>
                 </label>
                 <label className="form__field">
-                    <input type="url" className="form__textbox" name="link" id="add-card-form-link"
-                           placeholder="Ссылка на картинку" required/>
+                    <input
+                        type="url"
+                        className="form__textbox"
+                        name="link"
+                        id="add-card-form-link"
+                        placeholder="Ссылка на картинку"
+                        required
+                    />
                     <span className="form__error" id="add-card-form-link-error"></span>
                 </label>
             </PopupWithForm>
@@ -102,8 +128,6 @@ function App() {
                 onClose={onCloseAll}
                 isOpen={false}
             >
-                <h2 className="form__header">Вы уверены?</h2>
-                <button type="submit" className="form__save-btn">Да</button>
             </PopupWithForm>
         </div>
     );
