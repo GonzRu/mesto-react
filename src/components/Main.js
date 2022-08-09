@@ -20,6 +20,14 @@ const Main = ({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) => {
             .catch(error => console.log(error));
     }
 
+    const onCardDelete = (card) => {
+        api.removeCard(card._id)
+            .then(res => {
+                setCards(cards.filter(c => c._id !== card._id));
+            })
+            .catch(error => console.log(error));
+    }
+
     useEffect(() => {
         api.getInitialCards()
             .then(cards => setCards(cards))
@@ -69,7 +77,9 @@ const Main = ({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) => {
                             card={card}
                             userId={currentUser._id}
                             onLike={onLike}
-                            onCardClick={onCardClick}/>
+                            onRemove={onCardDelete}
+                            onCardClick={onCardClick}
+                        />
                     )}
                 </ul>
             </section>

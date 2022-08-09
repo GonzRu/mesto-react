@@ -1,18 +1,26 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import CurrentUserContext from '../contexts/CurrentUserContext';
 
-const Card = ({card, userId, onCardClick, onLike, onRemove}) => {
+const Card = ({card, onCardClick, onLike, onRemove}) => {
+
+    const currentUser = useContext(CurrentUserContext);
 
     const likesCount = card.likes.length;
-    const isLiked = card.likes.some(like => like._id === userId);
-    const canRemove = card.owner._id === userId;
+    const isLiked = card.likes.some(like => like._id === currentUser._id);
+    const isOwn = card.owner._id === currentUser._id;
 
     const likeClasses = isLiked
         ? 'card__like btn-icon card__like_active'
         : 'card__like btn-icon';
 
+
     return (
         <li className="card">
-            {canRemove && <div className="card__trash btn-icon" onClick={e => e.stopPropagation()}></div>}
+            {isOwn &&
+                <div
+                    className="card__trash btn-icon"
+                    onClick={() => onRemove(card)}
+                ></div>}
             <img src={card.link}
                  alt="#"
                  className="card__image"
