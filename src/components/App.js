@@ -6,6 +6,8 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import {api} from '../utils/Api';
+import EditProfilePopup from './EditProfilePopup';
+import card from './Card';
 
 function App() {
 
@@ -26,6 +28,15 @@ function App() {
     }
     const onCardClick = (card) => setSelectedCard(card);
 
+    const onUpdateUser = (user) => {
+        api.updateMyUser(user)
+            .then(u => {
+                setCurrentUser(u);
+                onCloseAll();
+            })
+            .catch(error => console.log(error));
+    }
+
     useEffect(() => {
         api.getMyUser()
             .then(user => setCurrentUser(user))
@@ -33,42 +44,22 @@ function App() {
     }, []);
 
     return (
+        <CurrentUserContext.Provider value={currentUser}>
+
         <div className='page'>
             <Header/>
-            <CurrentUserContext.Provider value={currentUser}>
             <Main
                 onEditAvatar={onEditAvatar}
                 onEditProfile={onEditProfile}
                 onAddPlace={onAddPlace}
                 onCardClick={onCardClick}
             />
-            </CurrentUserContext.Provider>
             <Footer/>
-            <PopupWithForm
-                name='profile'
-                title='Редактировать профиль'
+            <EditProfilePopup
                 isOpen={isEditProfilePopupOpen}
                 onClose={onCloseAll}
-            >
-                <label className="form__field">
-                    <input
-                        type="text"
-                        className="form__textbox"
-                        name="name"
-                        id="edit-profile-form-name"
-                        placeholder="Имя"
-                        required minLength="2"
-                        maxLength="40"
-                    />
-                    <span className="form__error" id="edit-profile-form-name-error"></span>
-                </label>
-                <label className="form__field">
-                    <input type="text" className="form__textbox" name="description" id="edit-profile-form-description"
-                           placeholder="Профессия"
-                           required minLength="2" maxLength="200"/>
-                    <span className="form__error" id="edit-profile-form-description-error"></span>
-                </label>
-            </PopupWithForm>
+                onUpdateUser={onUpdateUser}
+            />
             <PopupWithForm
                 name='add-place'
                 title='Новое место'
@@ -141,6 +132,7 @@ function App() {
             >
             </PopupWithForm>
         </div>
+        </CurrentUserContext.Provider>
     );
 }
 

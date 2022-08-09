@@ -10,14 +10,13 @@ class Api {
             .then(this._processResponse);
     }
 
-    updateMyUser({name, about, avatar}) {
+    updateMyUser({name, about}) {
         return fetch(`${this._baseUrl}users/me`, {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify({
                 name: name,
                 about: about,
-                avatar: avatar
             })
         })
             .then(this._processResponse);

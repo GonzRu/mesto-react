@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PopupWithForm = ({name, title, submitText = 'Сохранить', children, isOpen, onClose}) => {
+const PopupWithForm = ({name, title, submitText = 'Сохранить', children, isOpen, onClose, onSubmit}) => {
 
     return (
         <div
@@ -20,10 +20,7 @@ const PopupWithForm = ({name, title, submitText = 'Сохранить', children
                     className="form"
                     name={name}
                     noValidate
-                    onSubmit={e => {
-                        e.preventDefault();
-                        onClose();
-                    }}
+                    onSubmit={onSubmit}
                 >
                     <h2 className="form__header">{title}</h2>
                     {children}
