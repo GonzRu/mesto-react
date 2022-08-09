@@ -8,6 +8,7 @@ import CurrentUserContext from '../contexts/CurrentUserContext';
 import {api} from '../utils/Api';
 import EditProfilePopup from './EditProfilePopup';
 import card from './Card';
+import EditAvatarPopup from './EditAvatarPopup';
 
 function App() {
 
@@ -28,10 +29,19 @@ function App() {
     }
     const onCardClick = (card) => setSelectedCard(card);
 
-    const onUpdateUser = (user) => {
-        api.updateMyUser(user)
-            .then(u => {
-                setCurrentUser(u);
+    const onUpdateUser = (data) => {
+        api.updateMyUser(data)
+            .then(user => {
+                setCurrentUser(user);
+                onCloseAll();
+            })
+            .catch(error => console.log(error));
+    }
+
+    const onUpdateAvatar = (data) => {
+        api.updateAvatar(data)
+            .then(user => {
+                setCurrentUser(user);
                 onCloseAll();
             })
             .catch(error => console.log(error));
@@ -92,36 +102,11 @@ function App() {
                     <span className="form__error" id="add-card-form-link-error"></span>
                 </label>
             </PopupWithForm>
-            <PopupWithForm
-                name='edit-avatar'
-                title='Обновить аватар'
+            <EditAvatarPopup
                 isOpen={isEditAvatarPopupOpen}
                 onClose={onCloseAll}
-            >
-                <label className="form__field">
-                    <input
-                        type="text"
-                        className="form__textbox"
-                        name="name"
-                        id="add-card-form-name"
-                        placeholder="Название"
-                        required minLength="2"
-                        maxLength="30"
-                    />
-                    <span className="form__error" id="add-card-form-name-error"></span>
-                </label>
-                <label className="form__field">
-                    <input
-                        type="url"
-                        className="form__textbox"
-                        name="link"
-                        id="add-card-form-link"
-                        placeholder="Ссылка на картинку"
-                        required
-                    />
-                    <span className="form__error" id="add-card-form-link-error"></span>
-                </label>
-            </PopupWithForm>
+                onUpdateAvatar={onUpdateAvatar}
+            />
             <ImagePopup card={selectedCard} onClose={onCloseAll}/>
             <PopupWithForm
                 name='card-remove'
