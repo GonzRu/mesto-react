@@ -1,12 +1,15 @@
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import CurrentUserContext from '../contexts/CurrentUserContext';
+import {api} from '../utils/Api';
 
 function App() {
 
+    const [currentUser, setCurrentUser] = useState();
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
     const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -23,15 +26,23 @@ function App() {
     }
     const onCardClick = (card) => setSelectedCard(card);
 
+    useEffect(() => {
+        api.getMyUser()
+            .then(user => setCurrentUser(user))
+            .catch(error => console.log(error));
+    }, []);
+
     return (
         <div className='page'>
             <Header/>
+            <CurrentUserContext.Provider value={currentUser}>
             <Main
                 onEditAvatar={onEditAvatar}
                 onEditProfile={onEditProfile}
                 onAddPlace={onAddPlace}
                 onCardClick={onCardClick}
             />
+            </CurrentUserContext.Provider>
             <Footer/>
             <PopupWithForm
                 name='profile'

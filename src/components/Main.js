@@ -1,13 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {api} from '../utils/Api';
 import Card from './Card';
+import CurrentUserContext from '../contexts/CurrentUserContext';
 
 const Main = ({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) => {
 
-    const [userId, setUserId] = useState('');
-    const [userAvatar, setUserAvatar] = useState('');
-    const [userName, setUserName] = useState('');
-    const [userDescription, setUserDescription] = useState('');
+    const currentUser = useContext(CurrentUserContext);
     const [cards, setCards] = useState([]);
 
     const onLike = (card, like) => {
@@ -23,17 +21,8 @@ const Main = ({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) => {
     }
 
     useEffect(() => {
-        Promise.all([api.getMyUser(), api.getInitialCards()])
-            .then(result => {
-                const [user, cards] = result;
-
-                setUserId(user._id)
-                setUserAvatar(user.avatar);
-                setUserName(user.name);
-                setUserDescription(user.about);
-
-                setCards(cards);
-            })
+        api.getInitialCards()
+            .then(cards => setCards(cards))
             .catch(error => console.log(error));
     }, []);
 
@@ -43,7 +32,7 @@ const Main = ({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) => {
             <section className="profile page__profile">
                 <div className="profile__avatar-group">
                     <img
-                        src={userAvatar}
+                        src={currentUser?.avatar}
                         alt="Аватар пользователя"
                         className="profile__avatar"/>
                     <button
@@ -56,7 +45,7 @@ const Main = ({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) => {
                     <div className="profile__name-wrapper">
                         <h1
                             className="profile__name">
-                            {userName ? userName : 'Загрузка...'}
+                            {currentUser ? currentUser.name : 'Загрузка...'}
                         </h1>
                         <button
                             type="button"
@@ -64,7 +53,7 @@ const Main = ({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) => {
                             onClick={onEditProfile}
                         ></button>
                     </div>
-                    <p className="profile__description">{userDescription}</p>
+                    <p className="profile__description">{currentUser?.about}</p>
                 </div>
                 <button
                     type="button"
@@ -78,7 +67,7 @@ const Main = ({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) => {
                         <Card
                             key={card._id}
                             card={card}
-                            userId={userId}
+                            userId={currentUser._id}
                             onLike={onLike}
                             onCardClick={onCardClick}/>
                     )}
