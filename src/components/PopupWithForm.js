@@ -3,12 +3,15 @@ import React, {useEffect} from 'react';
 const PopupWithForm = ({
                            name,
                            title,
-                           submitText = 'Сохранить',
                            children,
                            isOpen,
                            onClose,
-                           onSubmit
-}) => {
+                           onSubmit,
+                           isLoading,
+                           submitText = 'Сохранить',
+                           loadingSubmitText = 'Сохранение...',
+
+                       }) => {
 
     return (
         <div
@@ -32,7 +35,9 @@ const PopupWithForm = ({
                 >
                     <h2 className="form__header">{title}</h2>
                     {children}
-                    <button type="submit" className="form__save-btn">{submitText}</button>
+                    <button type="submit" className="form__save-btn">
+                        {isLoading ? loadingSubmitText : submitText}
+                    </button>
                 </form>
             </div>
         </div>
