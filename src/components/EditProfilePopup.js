@@ -13,7 +13,7 @@ const EditProfilePopup = ({isOpen, onClose, onUpdateUser, isLoading}) => {
             setName(currentUser.name);
             setDescription(currentUser.about);
         }
-    }, [currentUser]);
+    }, [currentUser, isOpen]);
 
     const onSubmit = () => {
         onUpdateUser({
