@@ -1,6 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
-const PopupWithForm = ({name, title, submitText = 'Сохранить', children, isOpen, onClose, onSubmit}) => {
+const PopupWithForm = ({
+                           name,
+                           title,
+                           submitText = 'Сохранить',
+                           children,
+                           isOpen,
+                           onClose,
+                           onSubmit
+}) => {
 
     return (
         <div

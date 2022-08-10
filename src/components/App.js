@@ -100,6 +100,22 @@ function App() {
             .catch(error => console.log(error));
     }, []);
 
+
+
+    useEffect(() => {
+        const onMouseDown = e => {
+            if (e.key === 'Escape') {
+                onCloseAll();
+            }
+        }
+
+        document.addEventListener('keydown', onMouseDown);
+
+        return () => {
+            document.removeEventListener('keydown', onMouseDown);
+        }
+    }, [])
+
     return (
         <CurrentUserContext.Provider value={currentUser}>
 
