@@ -10,7 +10,6 @@ const PopupWithForm = ({
                            isLoading,
                            submitText = 'Сохранить',
                            loadingSubmitText = 'Сохранение...',
-
                        }) => {
 
     return (

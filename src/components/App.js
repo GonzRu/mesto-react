@@ -2,7 +2,6 @@ import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
 import {useEffect, useState} from 'react';
-import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import {api} from '../utils/Api';
@@ -116,8 +115,6 @@ function App() {
             .then(cards => setCards(cards))
             .catch(error => console.log(error));
     }, []);
-
-
 
     useEffect(() => {
         const onMouseDown = e => {

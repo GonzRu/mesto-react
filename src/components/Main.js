@@ -54,7 +54,6 @@ const Main = ({
                         <Card
                             key={card._id}
                             card={card}
-                            userId={currentUser._id}
                             onLike={onCardLike}
                             onRemove={onCardDelete}
                             onCardClick={onCardClick}
