@@ -19,10 +19,7 @@ function App() {
     const [isRemovePlacePopupOpen, setIsRemovePlacePopupOpen] = useState(false);
 
     // isLoading
-    const [isEditAvatarLoading, setIsEditAvatarLoading] = useState(false);
-    const [isEditProfileLoading, setIsEditProfileLoading] = useState(false);
-    const [isAddPlaceLoading, setIsAddPlaceLoading] = useState(false);
-    const [isRemovePlaceLoading, setIsRemovePlaceLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [currentUser, setCurrentUser] = useState();
 
@@ -43,26 +40,27 @@ function App() {
     }
     const onCardClick = (card) => setSelectedCard(card);
 
+    const doRequest = (promise) => {
+        setIsLoading(true);
+        promise
+            .catch(error => console.log(error))
+            .finally(() => setIsLoading(false));
+    }
+
     const onUpdateUser = (data) => {
-        setIsEditProfileLoading(true);
-        api.updateMyUser(data)
+        doRequest(api.updateMyUser(data)
             .then(user => {
                 setCurrentUser(user);
                 onCloseAll();
-            })
-            .catch(error => console.log(error))
-            .finally(() => setIsEditProfileLoading(false));
+            }));
     }
 
     const onUpdateAvatar = (data) => {
-        setIsEditAvatarLoading(true);
-        api.updateAvatar(data)
+        doRequest(api.updateAvatar(data)
             .then(user => {
                 setCurrentUser(user);
                 onCloseAll();
-            })
-            .catch(error => console.log(error))
-            .finally(() => setIsEditAvatarLoading(false));
+            }));
     }
 
     const onCardLike = (card, like) => {
@@ -78,14 +76,11 @@ function App() {
     }
 
     const onCreateCard = (data) => {
-        setIsAddPlaceLoading(true);
-        api.createCard(data)
+        doRequest(api.createCard(data)
             .then(card => {
                 setCards([card, ...cards]);
                 onCloseAll();
-            })
-            .catch(error => console.log(error))
-            .finally(() => setIsAddPlaceLoading(false));
+            }));
     }
 
     const onCardDelete = card => {
@@ -94,14 +89,11 @@ function App() {
     }
 
     const onRemoveCard = () => {
-        setIsRemovePlaceLoading(true);
-        api.removeCard(removedCard._id)
+        doRequest(api.removeCard(removedCard._id)
             .then(res => {
                 setCards(cards.filter(c => c._id !== removedCard._id));
                 onCloseAll();
-            })
-            .catch(error => console.log(error))
-            .finally(() => setIsRemovePlaceLoading(false));
+            }));
     }
 
     useEffect(() => {
@@ -149,19 +141,19 @@ function App() {
                     isOpen={isEditProfilePopupOpen}
                     onClose={onCloseAll}
                     onUpdateUser={onUpdateUser}
-                    isLoading={isEditProfileLoading}
+                    isLoading={isLoading}
                 />
                 <AddPlacePopup
                     isOpen={isAddPlacePopupOpen}
                     onClose={onCloseAll}
                     onAddPlace={onCreateCard}
-                    isLoading={isAddPlaceLoading}
+                    isLoading={isLoading}
                 />
                 <EditAvatarPopup
                     isOpen={isEditAvatarPopupOpen}
                     onClose={onCloseAll}
                     onUpdateAvatar={onUpdateAvatar}
-                    isLoading={isEditAvatarLoading}
+                    isLoading={isLoading}
                 />
                 <ImagePopup
                     card={selectedCard}
@@ -171,7 +163,7 @@ function App() {
                     isOpen={isRemovePlacePopupOpen}
                     onRemove={onRemoveCard}
                     onClose={onCloseAll}
-                    isLoading={isRemovePlaceLoading}
+                    isLoading={isLoading}
                 />
             </div>
         </CurrentUserContext.Provider>
