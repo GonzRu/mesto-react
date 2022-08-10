@@ -10,7 +10,7 @@ const Main = ({
                   onEditProfile,
                   onAddPlace,
                   onCardClick
-}) => {
+              }) => {
 
     const currentUser = useContext(CurrentUserContext);
 
@@ -26,7 +26,7 @@ const Main = ({
                         type="button"
                         className="profile__avatar-btn btn-icon"
                         onClick={onEditAvatar}
-                    ></button>
+                    />
                 </div>
                 <div className="profile__info">
                     <div className="profile__name-wrapper">
@@ -38,7 +38,7 @@ const Main = ({
                             type="button"
                             className="profile__edit btn-icon"
                             onClick={onEditProfile}
-                        ></button>
+                        />
                     </div>
                     <p className="profile__description">{currentUser?.about}</p>
                 </div>
@@ -46,7 +46,7 @@ const Main = ({
                     type="button"
                     onClick={onAddPlace}
                     className="profile__add-photo btn-icon"
-                ></button>
+                />
             </section>
             <section className="cards page__cards">
                 <ul className="cards__list">
