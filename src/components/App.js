@@ -115,12 +115,20 @@ function App() {
             }
         }
 
-        document.addEventListener('keydown', onMouseDown);
+        if (isEditProfilePopupOpen || isEditAvatarPopupOpen ||
+            isRemovePlacePopupOpen || isAddPlacePopupOpen) {
+            document.addEventListener('keydown', onMouseDown);
 
-        return () => {
-            document.removeEventListener('keydown', onMouseDown);
+            return () => {
+                document.removeEventListener('keydown', onMouseDown);
+            }
         }
-    }, [])
+    }, [
+        isEditProfilePopupOpen,
+        isEditAvatarPopupOpen,
+        isRemovePlacePopupOpen,
+        isAddPlacePopupOpen
+    ])
 
     return (
         <CurrentUserContext.Provider value={currentUser}>
