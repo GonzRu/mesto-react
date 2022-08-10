@@ -12,6 +12,11 @@ const PopupWithForm = ({
                            loadingSubmitText = 'Сохранение...',
                        }) => {
 
+    const submitHandler = e => {
+        e.preventDefault();
+        onSubmit();
+    }
+
     return (
         <div
             className={`popup popup_type_${name} ${isOpen && 'popup_opened'}`}
@@ -30,7 +35,7 @@ const PopupWithForm = ({
                     className="form"
                     name={name}
                     noValidate
-                    onSubmit={onSubmit}
+                    onSubmit={submitHandler}
                 >
                     <h2 className="form__header">{title}</h2>
                     {children}

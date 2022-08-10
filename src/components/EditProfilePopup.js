@@ -15,9 +15,7 @@ const EditProfilePopup = ({isOpen, onClose, onUpdateUser, isLoading}) => {
         }
     }, [currentUser]);
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-
+    const onSubmit = () => {
         onUpdateUser({
             name: name,
             about: description

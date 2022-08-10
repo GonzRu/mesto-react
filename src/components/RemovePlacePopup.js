@@ -3,8 +3,7 @@ import PopupWithForm from './PopupWithForm';
 
 const RemovePlacePopup = ({isOpen, onClose, onRemove}) => {
 
-    const onSubmit = e => {
-        e.preventDefault();
+    const onSubmit = () => {
         onRemove();
     }
 

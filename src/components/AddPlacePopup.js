@@ -6,8 +6,7 @@ const AddPlacePopup = ({isOpen, onClose, onAddPlace, isLoading}) => {
     const [name, setName] = useState('');
     const [link, setLink] = useState('');
 
-    const onSubmit = (e) => {
-        e.preventDefault();
+    const onSubmit = () => {
         onAddPlace({
             name: name,
             link: link,
