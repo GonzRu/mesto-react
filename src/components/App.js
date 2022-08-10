@@ -9,6 +9,7 @@ import {api} from '../utils/Api';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import RemovePlacePopup from './RemovePlacePopup';
 
 function App() {
 
@@ -16,7 +17,9 @@ function App() {
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
     const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+    const [isRemovePlacePopupOpen, setIsRemovePlacePopupOpen] = useState(false);
     const [cards, setCards] = useState([]);
+    const [removedCard, setRemovedCard] = useState(null);
     const [selectedCard, setSelectedCard] = useState(null);
 
     const onEditAvatar = () => setIsEditAvatarPopupOpen(true);
@@ -26,6 +29,8 @@ function App() {
         setIsEditAvatarPopupOpen(false);
         setIsEditProfilePopupOpen(false);
         setIsAddPlacePopupOpen(false);
+        setIsRemovePlacePopupOpen(false);
+        setRemovedCard(null);
         setSelectedCard(null);
     }
     const onCardClick = (card) => setSelectedCard(card);
@@ -60,14 +65,6 @@ function App() {
             .catch(error => console.log(error));
     }
 
-    const onCardDelete = (card) => {
-        api.removeCard(card._id)
-            .then(res => {
-                setCards(cards.filter(c => c._id !== card._id));
-            })
-            .catch(error => console.log(error));
-    }
-
     const onCreateCard = (data) => {
         api.createCard(data)
             .then(card => {
@@ -75,6 +72,20 @@ function App() {
                 onCloseAll();
             })
             .catch(error => console.log(error));
+    }
+
+    const onCardDelete = card => {
+        setRemovedCard(card);
+        setIsRemovePlacePopupOpen(true);
+    }
+
+    const onRemoveCard = () => {
+        api.removeCard(removedCard._id)
+            .then(res => {
+                setCards(cards.filter(c => c._id !== removedCard._id));
+            })
+            .catch(error => console.log(error));
+        onCloseAll();
     }
 
     useEffect(() => {
@@ -123,14 +134,11 @@ function App() {
                     card={selectedCard}
                     onClose={onCloseAll}
                 />
-                <PopupWithForm
-                    name='card-remove'
-                    title='Вы уверены?'
-                    submitText='Да'
+                <RemovePlacePopup
+                    isOpen={isRemovePlacePopupOpen}
+                    onRemove={onRemoveCard}
                     onClose={onCloseAll}
-                    isOpen={false}
-                >
-                </PopupWithForm>
+                />
             </div>
         </CurrentUserContext.Provider>
     );
