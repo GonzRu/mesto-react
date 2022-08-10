@@ -7,8 +7,8 @@ import ImagePopup from './ImagePopup';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import {api} from '../utils/Api';
 import EditProfilePopup from './EditProfilePopup';
-import card from './Card';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 
 function App() {
 
@@ -16,6 +16,7 @@ function App() {
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
     const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+    const [cards, setCards] = useState([]);
     const [selectedCard, setSelectedCard] = useState(null);
 
     const onEditAvatar = () => setIsEditAvatarPopupOpen(true);
@@ -47,76 +48,90 @@ function App() {
             .catch(error => console.log(error));
     }
 
+    const onCardLike = (card, like) => {
+        const promise = like ? api.likeCard(card._id) : api.unlikeCard(card._id);
+
+        promise
+            .then(card => {
+                const newCardsList = cards.map(c => c._id === card._id ? card : c);
+
+                setCards(newCardsList);
+            })
+            .catch(error => console.log(error));
+    }
+
+    const onCardDelete = (card) => {
+        api.removeCard(card._id)
+            .then(res => {
+                setCards(cards.filter(c => c._id !== card._id));
+            })
+            .catch(error => console.log(error));
+    }
+
+    const onCreateCard = (data) => {
+        api.createCard(data)
+            .then(card => {
+                setCards([card, ...cards]);
+                onCloseAll();
+            })
+            .catch(error => console.log(error));
+    }
+
     useEffect(() => {
         api.getMyUser()
             .then(user => setCurrentUser(user))
             .catch(error => console.log(error));
     }, []);
 
+    useEffect(() => {
+        api.getInitialCards()
+            .then(cards => setCards(cards))
+            .catch(error => console.log(error));
+    }, []);
+
     return (
         <CurrentUserContext.Provider value={currentUser}>
 
-        <div className='page'>
-            <Header/>
-            <Main
-                onEditAvatar={onEditAvatar}
-                onEditProfile={onEditProfile}
-                onAddPlace={onAddPlace}
-                onCardClick={onCardClick}
-            />
-            <Footer/>
-            <EditProfilePopup
-                isOpen={isEditProfilePopupOpen}
-                onClose={onCloseAll}
-                onUpdateUser={onUpdateUser}
-            />
-            <PopupWithForm
-                name='add-place'
-                title='Новое место'
-                submitText='Создать'
-                isOpen={isAddPlacePopupOpen}
-                onClose={onCloseAll}
-            >
-                <label className="form__field">
-                    <input
-                        type="text"
-                        className="form__textbox"
-                        name="name"
-                        id="add-card-form-name"
-                        placeholder="Название"
-                        required
-                        minLength="2"
-                        maxLength="30"
-                    />
-                    <span className="form__error" id="add-card-form-name-error"></span>
-                </label>
-                <label className="form__field">
-                    <input
-                        type="url"
-                        className="form__textbox"
-                        name="link"
-                        id="add-card-form-link"
-                        placeholder="Ссылка на картинку"
-                        required
-                    />
-                    <span className="form__error" id="add-card-form-link-error"></span>
-                </label>
-            </PopupWithForm>
-            <EditAvatarPopup
-                isOpen={isEditAvatarPopupOpen}
-                onClose={onCloseAll}
-                onUpdateAvatar={onUpdateAvatar}
-            />
-            <ImagePopup card={selectedCard} onClose={onCloseAll}/>
-            <PopupWithForm
-                name='card-remove'
-                title='Вы уверены?'
-                submitText='Да'
-                onClose={onCloseAll}
-                isOpen={false}
-            >
-            </PopupWithForm>
-        </div>
+            <div className='page'>
+                <Header/>
+                <Main
+                    cards={cards}
+                    onCardLike={onCardLike}
+                    onCardDelete={onCardDelete}
+                    onCardClick={onCardClick}
+                    onEditAvatar={onEditAvatar}
+                    onEditProfile={onEditProfile}
+                    onAddPlace={onAddPlace}
+                />
+                <Footer/>
+                <EditProfilePopup
+                    isOpen={isEditProfilePopupOpen}
+                    onClose={onCloseAll}
+                    onUpdateUser={onUpdateUser}
+                />
+                <AddPlacePopup
+                    isOpen={isAddPlacePopupOpen}
+                    onClose={onCloseAll}
+                    onAddPlace={onCreateCard}
+                />
+                <EditAvatarPopup
+                    isOpen={isEditAvatarPopupOpen}
+                    onClose={onCloseAll}
+                    onUpdateAvatar={onUpdateAvatar}
+                />
+                <ImagePopup
+                    card={selectedCard}
+                    onClose={onCloseAll}
+                />
+                <PopupWithForm
+                    name='card-remove'
+                    title='Вы уверены?'
+                    submitText='Да'
+                    onClose={onCloseAll}
+                    isOpen={false}
+                >
+                </PopupWithForm>
+            </div>
         </CurrentUserContext.Provider>
     );
 }
