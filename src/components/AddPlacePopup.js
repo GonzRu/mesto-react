@@ -17,7 +17,9 @@ const AddPlacePopup = ({isOpen, onClose, onAddPlace, isLoading}) => {
 
     useEffect(() => {
         name.setValue('');
+        name.resetError();
         link.setValue('');
+        link.resetError();
     }, [isOpen])
 
     useEffect(() => {

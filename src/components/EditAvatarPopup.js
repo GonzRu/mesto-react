@@ -16,6 +16,7 @@ const EditAvatarPopup = ({isOpen, onClose, onUpdateAvatar, isLoading}) => {
 
     useEffect(() => {
         ref.current.value = '';
+        setError('');
     }, [isOpen])
 
 

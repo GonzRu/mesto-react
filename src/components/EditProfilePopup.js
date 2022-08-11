@@ -14,7 +14,9 @@ const EditProfilePopup = ({isOpen, onClose, onUpdateUser, isLoading}) => {
     useEffect(() => {
         if (currentUser) {
             name.setValue(currentUser.name);
+            name.resetError();
             description.setValue(currentUser.about);
+            description.resetError();
         }
     }, [currentUser, isOpen]);
 

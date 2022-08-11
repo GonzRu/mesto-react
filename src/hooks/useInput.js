@@ -11,5 +11,7 @@ export const useInput = (defaultValue, defaultIsValid = false) => {
         setError(e.target.validity.valid ? '' : e.target.validationMessage);
     }
 
-    return {value, setValue, onChange, isValid, error};
+    const resetError = () => setError('');
+
+    return {value, setValue, onChange, isValid, error, resetError};
 }
