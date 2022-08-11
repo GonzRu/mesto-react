@@ -1,9 +1,12 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import PopupWithForm from './PopupWithForm';
 
 const EditAvatarPopup = ({isOpen, onClose, onUpdateAvatar, isLoading}) => {
 
     const ref = useRef();
+    const [isValid, setIsValid] = useState(false);
+    const [error, setError] = useState('');
+
 
     const onSubmit = () => {
         onUpdateAvatar({
@@ -15,6 +18,21 @@ const EditAvatarPopup = ({isOpen, onClose, onUpdateAvatar, isLoading}) => {
         ref.current.value = '';
     }, [isOpen])
 
+
+    useEffect(() => {
+        console.log(ref);
+        const onChange = (e) => {
+            setIsValid(e.target.validity.valid)
+            setError(e.target.validationMessage)
+        }
+
+        ref.current.addEventListener('input', onChange)
+
+        return () => {
+            ref.current.removeEventListener('input', onChange)
+        }
+    }, [])
+
     return (
         <PopupWithForm
             name='edit-avatar'
@@ -23,6 +41,7 @@ const EditAvatarPopup = ({isOpen, onClose, onUpdateAvatar, isLoading}) => {
             onClose={onClose}
             onSubmit={onSubmit}
             isLoading={isLoading}
+            isValid={isValid}
         >
             <label className="form__field">
                 <input
@@ -34,7 +53,7 @@ const EditAvatarPopup = ({isOpen, onClose, onUpdateAvatar, isLoading}) => {
                     ref={ref}
                     required
                 />
-                <span className="form__error" id="link-error"></span>
+                <span className="form__error" id="link-error">{error}</span>
             </label>
         </PopupWithForm>
     );

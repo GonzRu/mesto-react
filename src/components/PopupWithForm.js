@@ -8,6 +8,7 @@ const PopupWithForm = ({
                            onClose,
                            onSubmit,
                            isLoading,
+                           isValid,
                            submitText = 'Сохранить',
                            loadingSubmitText = 'Сохранение...',
                        }) => {
@@ -39,7 +40,10 @@ const PopupWithForm = ({
                 >
                     <h2 className="form__header">{title}</h2>
                     {children}
-                    <button type="submit" className="form__save-btn">
+                    <button
+                        type="submit"
+                        className={`form__save-btn ${!isValid && 'form__save-btn_disabled'}`}
+                    >
                         {isLoading ? loadingSubmitText : submitText}
                     </button>
                 </form>
